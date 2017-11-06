@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String DIFFICULTY_MEDIUM = "medium";
     public static final String QUESTION_LIST = "question_list";
 
+    public static final String APP_ID = "ca-app-pub-9407172029768846~2697309241";
+
     //Fields
     @BindView(R.id.new_game_button)
     Button newGameButton;
