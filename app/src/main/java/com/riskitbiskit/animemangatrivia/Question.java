@@ -6,24 +6,33 @@ import java.util.List;
 
 public class Question {
 
-    @SerializedName("question")
-    private String mQuestion;
+    @SerializedName("results")
+    private List<Results> mResults;
 
-    @SerializedName("correct_answers")
-    private String mAnswer;
-
-    @SerializedName("incorrect_answers")
-    private List<String> mIncorrectAnswers;
-
-    public String getQuestion() {
-        return mQuestion;
+    public List<Results> getResults() {
+        return mResults;
     }
 
-    public String getAnswer() {
-        return mAnswer;
-    }
+    public class Results {
+        @SerializedName("question")
+        private String mQuestion;
 
-    public List<String> getIncorrectAnswers() {
-        return mIncorrectAnswers;
+        @SerializedName("correct_answer")
+        private String mAnswer;
+
+        @SerializedName("incorrect_answers")
+        private List<String> mIncorrectAnswers;
+
+        public String getQuestion() {
+            return mQuestion;
+        }
+
+        public String getAnswer() {
+            return mAnswer;
+        }
+
+        public List<String> getIncorrectAnswers() {
+            return mIncorrectAnswers;
+        }
     }
 }
