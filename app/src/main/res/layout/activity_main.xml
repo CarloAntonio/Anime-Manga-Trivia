@@ -30,12 +30,14 @@
                 android:id="@+id/answer1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/answer2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:layout_weight="1"/>
 
         </LinearLayout>
@@ -48,12 +50,14 @@
                 android:id="@+id/answer3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/answer4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:layout_weight="1"/>
 
         </LinearLayout>

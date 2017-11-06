@@ -3,10 +3,13 @@ package com.riskitbiskit.animemangatrivia;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -36,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.answer4)
     TextView answerView4;
 
+    //Global variables
+    List<Question.Results> mResults;
+    String mQuestion;
+    String mAnswer;
+    List<String> mPossibleAnswers;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,29 +63,59 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<Question>() {
             @Override
             public void onResponse(Call<Question> call, Response<Question> response) {
-                List<Question.Results> results = response.body().getResults();
+                mResults = response.body().getResults();
 
-                for (int i = 0; i < results.size(); i++) {
-                    Question.Results currentResult = results.get(i);
+                int i = 0;
 
-                    String unformatedQuestion = currentResult.getQuestion();
-                    String formattedQuestion = formatText(unformatedQuestion);
-                    questionView.setText(formattedQuestion);
+                if (i < mResults.size()) {
+                    Question.Results currentResult = mResults.get(i);
 
-                    String unformattedAnswer = currentResult.getAnswer();
-                    String formattedAnswer = formatText(unformattedAnswer);
-                    answerView1.setText(formattedAnswer);
+                    mQuestion = formatText(currentResult.getQuestion());
+                    mAnswer = formatText(currentResult.getAnswer());
+                    mPossibleAnswers = currentResult.getIncorrectAnswers();
 
-                    List<String> incorrectAns = currentResult.getIncorrectAnswers();
-                    answerView2.setText(incorrectAns.get(0));
-                    answerView3.setText(incorrectAns.get(1));
-                    answerView4.setText(incorrectAns.get(2));
+                    //format possible answers
+                    for (int j = 0; j < mPossibleAnswers.size(); j++) {
+                        String formattedText = formatText(mPossibleAnswers.get(j));
+                        mPossibleAnswers.set(j, formattedText);
+                    }
+
+                    questionView.setText(mQuestion);
+
+                    mPossibleAnswers.add(mAnswer);
+
+                    Collections.shuffle(mPossibleAnswers);
+                    answerView2.setText(mPossibleAnswers.get(0));
+                    answerView3.setText(mPossibleAnswers.get(1));
+                    answerView4.setText(mPossibleAnswers.get(2));
+                    answerView1.setText(mPossibleAnswers.get(3));
+
+                    setClickListener(answerView1);
+                    setClickListener(answerView2);
+                    setClickListener(answerView3);
+                    setClickListener(answerView4);
                 }
             }
 
             @Override
             public void onFailure(Call<Question> call, Throwable t) {
                 Log.e(LOG_TAG, "Error sending trivia request");
+            }
+        });
+    }
+
+    private void setClickListener(TextView textView) {
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView textView = (TextView) view;
+
+                //checks to see if text in textview is equal to the correct answer text
+                if (textView.getText().equals(mAnswer)) {
+                    Toast.makeText(getBaseContext(), "Correct!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getBaseContext(), "Nope.", Toast.LENGTH_SHORT).show();
+                };
             }
         });
     }
