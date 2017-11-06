@@ -9,6 +9,11 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Constants
+    public static final String LOG_TAG = MainActivity.class.getSimpleName();
+    public static final String ROOT_URL = "https://opentdb.com/api.php?";
+
+    //Fields
     @BindView(R.id.question)
     TextView questionView;
     @BindView(R.id.answer1)
