@@ -112,14 +112,25 @@ public class TriviaActivity extends AppCompatActivity {
     }
 
     private void newQuestion() {
+        //Change to next question on list by adding 1 to count
         mQuestionNumber++;
-        Intent intent = new Intent(this, TriviaActivity.class);
-        intent.putExtra(MainActivity.QUESTION_LIST, (Serializable) mResults);
-        intent.putExtra(QUESTION_NUMBER, mQuestionNumber);
-        intent.putExtra(NUMBER_CORRECT, mCorrect);
-        intent.putExtra(NUMBER_INCORRECT, mIncorrect);
-        finish();
-        startActivity(intent);
+
+        if (mQuestionNumber == mResults.size()) {
+            Intent intent = new Intent(this,ResultsActivity.class);
+            intent.putExtra(MainActivity.QUESTION_LIST, (Serializable) mResults);
+            intent.putExtra(NUMBER_CORRECT, mCorrect);
+            intent.putExtra(NUMBER_INCORRECT, mIncorrect);
+            finish();
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, TriviaActivity.class);
+            intent.putExtra(MainActivity.QUESTION_LIST, (Serializable) mResults);
+            intent.putExtra(QUESTION_NUMBER, mQuestionNumber);
+            intent.putExtra(NUMBER_CORRECT, mCorrect);
+            intent.putExtra(NUMBER_INCORRECT, mIncorrect);
+            finish();
+            startActivity(intent);
+        }
     }
 
     private String formatText(String unformatedText) {

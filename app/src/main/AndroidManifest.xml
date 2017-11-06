@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".TriviaActivity">
         </activity>
+        <activity android:name=".ResultsActivity">
+        </activity>
     </application>
 
 </manifest>
