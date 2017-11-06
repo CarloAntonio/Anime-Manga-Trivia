@@ -13,7 +13,7 @@ public class Question {
     private String mAnswer;
 
     @SerializedName("incorrect_answers")
-    private List<IncorrectAnswer> mIncorrectAnswers;
+    private List<String> mIncorrectAnswers;
 
     public String getQuestion() {
         return mQuestion;
@@ -23,25 +23,7 @@ public class Question {
         return mAnswer;
     }
 
-    public List<IncorrectAnswer> getIncorrectAnswers() {
+    public List<String> getIncorrectAnswers() {
         return mIncorrectAnswers;
-    }
-
-    public class IncorrectAnswer {
-        private String wrongAnswer1;
-        private String wrongAnswer2;
-        private String wrongAnswer3;
-
-        public String getWrongAnswer1() {
-            return wrongAnswer1;
-        }
-
-        public String getWrongAnswer2() {
-            return wrongAnswer2;
-        }
-
-        public String getWrongAnswer3() {
-            return wrongAnswer3;
-        }
     }
 }
