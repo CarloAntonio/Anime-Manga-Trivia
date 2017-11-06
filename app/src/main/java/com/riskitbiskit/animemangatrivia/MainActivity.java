@@ -2,13 +2,17 @@ package com.riskitbiskit.animemangatrivia;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
@@ -35,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     //Fields
     @BindView(R.id.new_game_button)
     Button newGameButton;
+    @BindView(R.id.main_frame)
+    ImageView background;
 
     //Global variables
     List<Question.Results> mResults;
@@ -45,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        //Set-up background
+        Glide.with(this).load(R.drawable.anime_manga_main).into(background);
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(ROOT_URL)
