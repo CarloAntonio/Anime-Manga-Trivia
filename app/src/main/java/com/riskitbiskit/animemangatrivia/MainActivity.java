@@ -1,12 +1,16 @@
 package com.riskitbiskit.animemangatrivia;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,24 +30,15 @@ public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
     public static final String ROOT_URL = "https://opentdb.com/";
     public static final String DIFFICULTY_MEDIUM = "medium";
+    public static final String QUESTION_LIST = "question_list";
 
     //Fields
-    @BindView(R.id.question)
-    TextView questionView;
-    @BindView(R.id.answer1)
-    TextView answerView1;
-    @BindView(R.id.answer2)
-    TextView answerView2;
-    @BindView(R.id.answer3)
-    TextView answerView3;
-    @BindView(R.id.answer4)
-    TextView answerView4;
+    @BindView(R.id.new_game_button)
+    Button newGameButton;
 
     //Global variables
     List<Question.Results> mResults;
-    String mQuestion;
-    String mAnswer;
-    List<String> mPossibleAnswers;
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,36 +60,14 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Question> call, Response<Question> response) {
                 mResults = response.body().getResults();
 
-                int i = 0;
-
-                if (i < mResults.size()) {
-                    Question.Results currentResult = mResults.get(i);
-
-                    mQuestion = formatText(currentResult.getQuestion());
-                    mAnswer = formatText(currentResult.getAnswer());
-                    mPossibleAnswers = currentResult.getIncorrectAnswers();
-
-                    //format possible answers
-                    for (int j = 0; j < mPossibleAnswers.size(); j++) {
-                        String formattedText = formatText(mPossibleAnswers.get(j));
-                        mPossibleAnswers.set(j, formattedText);
+                newGameButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, TriviaActivity.class);
+                        intent.putExtra(QUESTION_LIST, (Serializable) mResults);
+                        startActivity(intent);
                     }
-
-                    questionView.setText(mQuestion);
-
-                    mPossibleAnswers.add(mAnswer);
-
-                    Collections.shuffle(mPossibleAnswers);
-                    answerView2.setText(mPossibleAnswers.get(0));
-                    answerView3.setText(mPossibleAnswers.get(1));
-                    answerView4.setText(mPossibleAnswers.get(2));
-                    answerView1.setText(mPossibleAnswers.get(3));
-
-                    setClickListener(answerView1);
-                    setClickListener(answerView2);
-                    setClickListener(answerView3);
-                    setClickListener(answerView4);
-                }
+                });
             }
 
             @Override
@@ -102,29 +75,5 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(LOG_TAG, "Error sending trivia request");
             }
         });
-    }
-
-    private void setClickListener(TextView textView) {
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TextView textView = (TextView) view;
-
-                //checks to see if text in textview is equal to the correct answer text
-                if (textView.getText().equals(mAnswer)) {
-                    Toast.makeText(getBaseContext(), "Correct!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getBaseContext(), "Nope.", Toast.LENGTH_SHORT).show();
-                };
-            }
-        });
-    }
-
-    private String formatText(String unformatedText) {
-
-        unformatedText = unformatedText.replaceAll("&#039;", "'");
-        String formatedText = unformatedText.replaceAll("&quot;", "\"");
-
-        return formatedText;
     }
 }

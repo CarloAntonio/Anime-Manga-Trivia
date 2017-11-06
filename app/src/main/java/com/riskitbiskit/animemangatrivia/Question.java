@@ -2,6 +2,7 @@ package com.riskitbiskit.animemangatrivia;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class Question {
@@ -13,7 +14,7 @@ public class Question {
         return mResults;
     }
 
-    public class Results {
+    public class Results implements Serializable{
         @SerializedName("question")
         private String mQuestion;
 
