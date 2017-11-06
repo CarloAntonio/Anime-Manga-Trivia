@@ -18,6 +18,8 @@ public class TriviaActivity extends AppCompatActivity {
 
     //Constants
     public static final String QUESTION_NUMBER = "question_number";
+    public static final String NUMBER_CORRECT = "number_correct";
+    public static final String NUMBER_INCORRECT = "number_incorrect";
 
     //Fields
     @BindView(R.id.question)
@@ -37,6 +39,8 @@ public class TriviaActivity extends AppCompatActivity {
     String mAnswer;
     List<String> mPossibleAnswers;
     int mQuestionNumber;
+    int mCorrect;
+    int mIncorrect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,17 +51,8 @@ public class TriviaActivity extends AppCompatActivity {
         //Get intent from previous activity
         Intent intent = getIntent();
 
-        //Check for question list
-        if (intent.hasExtra(MainActivity.QUESTION_LIST)) {
-            mResults = (List<Question.Results>) intent.getSerializableExtra(MainActivity.QUESTION_LIST);
-        }
-
-        //Check for placement in question list, if there is one
-        if (intent.hasExtra(QUESTION_NUMBER)) {
-            mQuestionNumber = intent.getIntExtra(QUESTION_NUMBER, 0);
-        } else {
-            mQuestionNumber = 0;
-        }
+        //Grabs question list, question number, num of correct answers, and num of incorrect answers
+        pullFromIntent(intent);
 
         //Grab the specific question from the list based number
         Question.Results currentResult = mResults.get(mQuestionNumber);
@@ -104,10 +99,12 @@ public class TriviaActivity extends AppCompatActivity {
 
                 //checks to see if text in button text is equal to the correct answer text
                 if (textView.getText().equals(mAnswer)) {
-                    Toast.makeText(getBaseContext(), "Correct!", Toast.LENGTH_SHORT).show();
+                    mCorrect++;
+                    Toast.makeText(getBaseContext(), "Nice! That's " + mCorrect + " Correct!", Toast.LENGTH_SHORT).show();
                     newQuestion();
                 } else {
-                    Toast.makeText(getBaseContext(), "Nope.", Toast.LENGTH_SHORT).show();
+                    mIncorrect++;
+                    Toast.makeText(getBaseContext(), "Nope. That's " + mIncorrect + " Incorrect.", Toast.LENGTH_SHORT).show();
                     newQuestion();
                 };
             }
@@ -119,6 +116,8 @@ public class TriviaActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TriviaActivity.class);
         intent.putExtra(MainActivity.QUESTION_LIST, (Serializable) mResults);
         intent.putExtra(QUESTION_NUMBER, mQuestionNumber);
+        intent.putExtra(NUMBER_CORRECT, mCorrect);
+        intent.putExtra(NUMBER_INCORRECT, mIncorrect);
         finish();
         startActivity(intent);
     }
@@ -130,5 +129,33 @@ public class TriviaActivity extends AppCompatActivity {
 
         //Format for quotes
         return unformatedText.replaceAll("&quot;", "\"");
+    }
+
+    private void pullFromIntent(Intent intent) {
+        //Check for question list
+        if (intent.hasExtra(MainActivity.QUESTION_LIST)) {
+            mResults = (List<Question.Results>) intent.getSerializableExtra(MainActivity.QUESTION_LIST);
+        }
+
+        //Check for placement in question list, if there is one
+        if (intent.hasExtra(QUESTION_NUMBER)) {
+            mQuestionNumber = intent.getIntExtra(QUESTION_NUMBER, 0);
+        } else {
+            mQuestionNumber = 0;
+        }
+
+        //Check for number of questions answered correctly
+        if (intent.hasExtra(NUMBER_CORRECT)) {
+            mCorrect = intent.getIntExtra(NUMBER_CORRECT, 0);
+        } else {
+            mCorrect = 0;
+        }
+
+        //Check for number of questions answered incorrectly
+        if (intent.hasExtra(NUMBER_INCORRECT)) {
+            mIncorrect = intent.getIntExtra(NUMBER_INCORRECT, 0);
+        } else {
+            mIncorrect = 0;
+        }
     }
 }
