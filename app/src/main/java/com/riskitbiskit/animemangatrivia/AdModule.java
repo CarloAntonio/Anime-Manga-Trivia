@@ -2,6 +2,7 @@ package com.riskitbiskit.animemangatrivia;
 
 import android.content.Context;
 
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
 import javax.inject.Singleton;
@@ -23,7 +24,10 @@ public class AdModule {
         return new InterstitialAd(context);
     }
 
-
+    @Provides @Singleton
+    AdRequest providesAdRequestBuilder() {
+        return new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+    }
 
 
 }

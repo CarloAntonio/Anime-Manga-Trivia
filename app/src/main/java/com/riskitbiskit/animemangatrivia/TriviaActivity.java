@@ -46,6 +46,7 @@ public class TriviaActivity extends AppCompatActivity {
 
     //Fields (with dependency injections)
     @Inject InterstitialAd mInterstitialAd;
+    @Inject AdRequest mAdRequest;
 
     //Fields
     List<Question.Results> mResults;
@@ -221,9 +222,13 @@ public class TriviaActivity extends AppCompatActivity {
     }
 
     private void prepBannerAd() {
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+
+        AdComponent adComponent = DaggerAdComponent.builder()
+                .adModule(new AdModule(getApplicationContext()))
                 .build();
-        bannerAdView.loadAd(adRequest);
+
+        mAdRequest = adComponent.adRequest();
+
+        bannerAdView.loadAd(mAdRequest);
     }
 }
