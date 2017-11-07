@@ -13,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
@@ -35,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String ROOT_URL = "https://opentdb.com/";
     public static final String DIFFICULTY_MEDIUM = "medium";
     public static final String QUESTION_LIST = "question_list";
-
     public static final String APP_ID = "ca-app-pub-9407172029768846~2697309241";
 
     //Fields
@@ -56,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
 
         //Set-up background
         Glide.with(this).load(R.drawable.anime_manga_main).into(background);
+
+        //Initialize Ads
+        MobileAds.initialize(this, APP_ID);
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(ROOT_URL)

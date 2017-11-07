@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
@@ -20,6 +24,7 @@ public class TriviaActivity extends AppCompatActivity {
     public static final String QUESTION_NUMBER = "question_number";
     public static final String NUMBER_CORRECT = "number_correct";
     public static final String NUMBER_INCORRECT = "number_incorrect";
+    public static final String APP_UNIT_ID = "ca-app-pub-9407172029768846/1928466136";
 
     //Fields
     @BindView(R.id.question)
@@ -41,6 +46,7 @@ public class TriviaActivity extends AppCompatActivity {
     int mQuestionNumber;
     int mCorrect;
     int mIncorrect;
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,18 @@ public class TriviaActivity extends AppCompatActivity {
 
         //Grabs question list, question number, num of correct answers, and num of incorrect answers
         pullFromIntent(intent);
+
+        //Prep Interstitial Ad
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(APP_UNIT_ID);
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                openResultsActivity();
+            }
+        });
+
 
         //Grab the specific question from the list based number
         Question.Results currentResult = mResults.get(mQuestionNumber);
@@ -116,12 +134,11 @@ public class TriviaActivity extends AppCompatActivity {
         mQuestionNumber++;
 
         if (mQuestionNumber == mResults.size()) {
-            Intent intent = new Intent(this,ResultsActivity.class);
-            intent.putExtra(MainActivity.QUESTION_LIST, (Serializable) mResults);
-            intent.putExtra(NUMBER_CORRECT, mCorrect);
-            intent.putExtra(NUMBER_INCORRECT, mIncorrect);
-            finish();
-            startActivity(intent);
+            if (mInterstitialAd.isLoaded()) {
+                mInterstitialAd.show();
+            } else {
+                openResultsActivity();
+            }
         } else {
             Intent intent = new Intent(this, TriviaActivity.class);
             intent.putExtra(MainActivity.QUESTION_LIST, (Serializable) mResults);
@@ -131,6 +148,15 @@ public class TriviaActivity extends AppCompatActivity {
             finish();
             startActivity(intent);
         }
+    }
+
+    private void openResultsActivity() {
+        Intent intent = new Intent(this,ResultsActivity.class);
+        intent.putExtra(MainActivity.QUESTION_LIST, (Serializable) mResults);
+        intent.putExtra(NUMBER_CORRECT, mCorrect);
+        intent.putExtra(NUMBER_INCORRECT, mIncorrect);
+        finish();
+        startActivity(intent);
     }
 
     private String formatText(String unformatedText) {
