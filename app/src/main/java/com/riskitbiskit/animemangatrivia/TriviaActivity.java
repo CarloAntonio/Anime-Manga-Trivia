@@ -61,16 +61,7 @@ public class TriviaActivity extends AppCompatActivity {
         pullFromIntent(intent);
 
         //Prep Interstitial Ad
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(APP_UNIT_ID);
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-        mInterstitialAd.setAdListener(new AdListener() {
-            @Override
-            public void onAdClosed() {
-                openResultsActivity();
-            }
-        });
-
+        prepInterstitialAd();
 
         //Grab the specific question from the list based number
         Question.Results currentResult = mResults.get(mQuestionNumber);
@@ -159,6 +150,7 @@ public class TriviaActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //Format text method
     private String formatText(String unformatedText) {
 
         //Format for apostrophes
@@ -168,6 +160,7 @@ public class TriviaActivity extends AppCompatActivity {
         return unformatedText.replaceAll("&quot;", "\"");
     }
 
+    //Grab data from intent method
     private void pullFromIntent(Intent intent) {
         //Check for question list
         if (intent.hasExtra(MainActivity.QUESTION_LIST)) {
@@ -194,5 +187,18 @@ public class TriviaActivity extends AppCompatActivity {
         } else {
             mIncorrect = 0;
         }
+    }
+
+    //Prep Interstitial Ad method
+    private void prepInterstitialAd() {
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(APP_UNIT_ID);
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                openResultsActivity();
+            }
+        });
     }
 }
