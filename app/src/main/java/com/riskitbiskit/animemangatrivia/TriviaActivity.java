@@ -16,6 +16,8 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -28,7 +30,7 @@ public class TriviaActivity extends AppCompatActivity {
     public static final String INTERSTITIAL_APP_UNIT_ID = "ca-app-pub-9407172029768846/5620299135";
     public static final String TEST_INTERSTITIAL_APP_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
 
-    //Fields
+    //Views
     @BindView(R.id.question)
     TextView questionView;
     @BindView(R.id.answer1)
@@ -42,7 +44,10 @@ public class TriviaActivity extends AppCompatActivity {
     @BindView(R.id.adView)
     AdView bannerAdView;
 
-    //Global variables
+    //Fields (with dependency injections)
+    @Inject InterstitialAd mInterstitialAd;
+
+    //Fields
     List<Question.Results> mResults;
     String mQuestion;
     String mAnswer;
@@ -50,7 +55,7 @@ public class TriviaActivity extends AppCompatActivity {
     int mQuestionNumber;
     int mCorrect;
     int mIncorrect;
-    private InterstitialAd mInterstitialAd;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,7 +203,12 @@ public class TriviaActivity extends AppCompatActivity {
 
     //Prep Interstitial Ad method
     private void prepInterstitialAd() {
-        mInterstitialAd = new InterstitialAd(this);
+
+        AdComponent adComponent = DaggerAdComponent.builder()
+                .adModule(new AdModule(getApplicationContext()))
+                .build();
+
+        mInterstitialAd = adComponent.interstitialAd();
         //TODO: Change before releasing for production
         mInterstitialAd.setAdUnitId(TEST_INTERSTITIAL_APP_UNIT_ID);
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
