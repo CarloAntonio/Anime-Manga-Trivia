@@ -210,11 +210,14 @@ public class TriviaActivity extends AppCompatActivity {
 
     //Prep Interstitial Ad method
     private void prepInterstitialAd() {
-
+        //Use dagger2 to grab an instance of Interstitial Ad
         mInterstitialAd = mAdComponent.interstitialAd();
         //TODO: Change before releasing for production
+        //Set specific Ad unit id
         mInterstitialAd.setAdUnitId(TEST_INTERSTITIAL_APP_UNIT_ID);
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        //Use dagger2 to get instance of AdRequest
+        mInterstitialAd.loadAd(mAdComponent.adRequest());
+
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
@@ -223,10 +226,12 @@ public class TriviaActivity extends AppCompatActivity {
         });
     }
 
+    //Prep Banner Ad method
     private void prepBannerAd() {
-
+        //Use Dagger2 to grab instance of AdRequest
         mAdRequest = mAdComponent.adRequest();
 
+        //load Ad into banner
         bannerAdView.loadAd(mAdRequest);
     }
 }

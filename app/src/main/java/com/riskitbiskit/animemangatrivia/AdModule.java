@@ -2,6 +2,7 @@ package com.riskitbiskit.animemangatrivia;
 
 import android.content.Context;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
@@ -27,6 +28,12 @@ public class AdModule {
     @Provides @Singleton
     AdRequest providesAdRequestBuilder() {
         return new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+    }
+
+    //Not use, unsure how to implement
+    @Provides @Singleton
+    AdListener providesAdListener() {
+        return new AdListener();
     }
 
 

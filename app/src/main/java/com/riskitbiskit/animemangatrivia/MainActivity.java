@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -39,13 +41,16 @@ public class MainActivity extends AppCompatActivity {
     public static final String QUESTION_LIST = "question_list";
     public static final String APP_ID = "ca-app-pub-9407172029768846~2697309241";
 
-    //Fields
+    //Views
     @BindView(R.id.new_game_button)
     Button newGameButton;
     @BindView(R.id.main_frame)
     ImageView background;
 
-    //Global variables
+    //Fields (with dependency injections)
+    @Inject Retrofit.Builder mBuilder;
+
+    //Fields
     List<Question.Results> mResults;
     Context context = this;
 
@@ -61,11 +66,13 @@ public class MainActivity extends AppCompatActivity {
         //Initialize Ads
         MobileAds.initialize(this, APP_ID);
 
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(ROOT_URL)
-                .addConverterFactory(GsonConverterFactory.create());
+        NetworkComponent networkComponent = DaggerNetworkComponent.builder()
+                .networkModule(new NetworkModule(ROOT_URL))
+                .build();
 
-        Retrofit retrofit = builder.build();
+        mBuilder = networkComponent.retrofitBuilder();
+
+        Retrofit retrofit = mBuilder.build();
 
         ApiClient apiClient = retrofit.create(ApiClient.class);
         Call<Question> call = apiClient.quizGetter(DIFFICULTY_MEDIUM);

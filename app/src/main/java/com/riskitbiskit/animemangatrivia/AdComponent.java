@@ -2,6 +2,7 @@ package com.riskitbiskit.animemangatrivia;
 
 import android.content.Context;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 
@@ -15,4 +16,6 @@ public interface AdComponent {
 
     AdRequest adRequest();
 
+    //Not use, unsure how to implement
+    AdListener adListener();
 }
