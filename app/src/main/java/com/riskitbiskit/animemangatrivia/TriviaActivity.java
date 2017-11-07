@@ -56,6 +56,7 @@ public class TriviaActivity extends AppCompatActivity {
     int mQuestionNumber;
     int mCorrect;
     int mIncorrect;
+    AdComponent mAdComponent;
 
 
     @Override
@@ -69,6 +70,11 @@ public class TriviaActivity extends AppCompatActivity {
 
         //Grabs question list, question number, num of correct answers, and num of incorrect answers
         pullFromIntent(intent);
+
+        //Create Ad Component
+        mAdComponent = DaggerAdComponent.builder()
+                .adModule(new AdModule(getApplicationContext()))
+                .build();
 
         //Prep Interstitial Ad
         prepInterstitialAd();
@@ -205,11 +211,7 @@ public class TriviaActivity extends AppCompatActivity {
     //Prep Interstitial Ad method
     private void prepInterstitialAd() {
 
-        AdComponent adComponent = DaggerAdComponent.builder()
-                .adModule(new AdModule(getApplicationContext()))
-                .build();
-
-        mInterstitialAd = adComponent.interstitialAd();
+        mInterstitialAd = mAdComponent.interstitialAd();
         //TODO: Change before releasing for production
         mInterstitialAd.setAdUnitId(TEST_INTERSTITIAL_APP_UNIT_ID);
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
@@ -223,11 +225,7 @@ public class TriviaActivity extends AppCompatActivity {
 
     private void prepBannerAd() {
 
-        AdComponent adComponent = DaggerAdComponent.builder()
-                .adModule(new AdModule(getApplicationContext()))
-                .build();
-
-        mAdRequest = adComponent.adRequest();
+        mAdRequest = mAdComponent.adRequest();
 
         bannerAdView.loadAd(mAdRequest);
     }
