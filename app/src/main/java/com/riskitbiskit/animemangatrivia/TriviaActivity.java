@@ -120,22 +120,19 @@ public class TriviaActivity extends AppCompatActivity {
     }
 
     private void setClickListener(TextView textView) {
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TextView textView = (TextView) view;
+        textView.setOnClickListener(view -> {
+            TextView textView1 = (TextView) view;
 
-                //checks to see if text in button text is equal to the correct answer text
-                if (textView.getText().equals(mAnswer)) {
-                    mCorrect++;
-                    Toast.makeText(getBaseContext(), "Nice! That's " + mCorrect + " Correct!", Toast.LENGTH_SHORT).show();
-                    newQuestion();
-                } else {
-                    mIncorrect++;
-                    Toast.makeText(getBaseContext(), "Nope. That's " + mIncorrect + " Incorrect.", Toast.LENGTH_SHORT).show();
-                    newQuestion();
-                };
-            }
+            //checks to see if text in button text is equal to the correct answer text
+            if (textView1.getText().equals(mAnswer)) {
+                mCorrect++;
+                Toast.makeText(getBaseContext(), "Nice! That's " + mCorrect + " Correct!", Toast.LENGTH_SHORT).show();
+                newQuestion();
+            } else {
+                mIncorrect++;
+                Toast.makeText(getBaseContext(), "Nope. That's " + mIncorrect + " Incorrect.", Toast.LENGTH_SHORT).show();
+                newQuestion();
+            };
         });
     }
 

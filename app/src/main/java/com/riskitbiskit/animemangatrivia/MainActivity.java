@@ -15,12 +15,17 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
+import com.jakewharton.rxbinding2.view.RxView;
+import com.trello.rxlifecycle2.RxLifecycle;
+import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle2.android.RxLifecycleAndroid;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -66,10 +71,12 @@ public class MainActivity extends AppCompatActivity {
         //Initialize Ads
         MobileAds.initialize(this, APP_ID);
 
+        //Grab a reference of the network component
         NetworkComponent networkComponent = DaggerNetworkComponent.builder()
                 .networkModule(new NetworkModule(ROOT_URL))
                 .build();
 
+        //initialize retrofit builder using network component
         mBuilder = networkComponent.retrofitBuilder();
 
         Retrofit retrofit = mBuilder.build();
@@ -82,14 +89,15 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Question> call, Response<Question> response) {
                 mResults = response.body().getResults();
 
-                newGameButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(context, TriviaActivity.class);
-                        intent.putExtra(QUESTION_LIST, (Serializable) mResults);
-                        startActivity(intent);
-                    }
-                });
+                //Start TriviaActivity after button click
+                RxView.clicks(newGameButton)
+                        .debounce(500, TimeUnit.MILLISECONDS)
+                        .subscribe(aVoid -> {
+                            Intent intent = new Intent(context, TriviaActivity.class);
+                            intent.putExtra(QUESTION_LIST, (Serializable) mResults);
+                            startActivity(intent);
+                        });
+
             }
 
             @Override
