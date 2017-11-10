@@ -1,11 +1,14 @@
 package com.riskitbiskit.animemangatrivia;
 
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import java.io.Serializable;
@@ -28,6 +31,8 @@ public class ResultsActivity extends AppCompatActivity {
     TextView resultGreetingTV;
     @BindView(R.id.done_bt)
     Button doneBt;
+    @BindView(R.id.results_background)
+    ImageView resultsBackground;
 
     //Global variables
     List<Question.Results> mResults;
@@ -40,6 +45,8 @@ public class ResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
         ButterKnife.bind(this);
+
+        Glide.with(this).load(R.drawable.am_image_1).into(resultsBackground);
 
         Intent intent = getIntent();
         pullFromIntent(intent);
