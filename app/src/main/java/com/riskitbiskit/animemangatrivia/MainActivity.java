@@ -79,31 +79,34 @@ public class MainActivity extends AppCompatActivity {
         //initialize retrofit builder using network component
         mBuilder = networkComponent.retrofitBuilder();
 
-        Retrofit retrofit = mBuilder.build();
+        //Make API Call and handle result
+        RxView.clicks(newGameButton)
+                .debounce(500, TimeUnit.MILLISECONDS)
+                .subscribe(aVoid -> {
 
-        ApiClient apiClient = retrofit.create(ApiClient.class);
-        Call<Question> call = apiClient.quizGetter(DIFFICULTY_MEDIUM);
+                    Retrofit retrofit = mBuilder.build();
 
-        call.enqueue(new Callback<Question>() {
-            @Override
-            public void onResponse(Call<Question> call, Response<Question> response) {
-                mResults = response.body().getResults();
+                    ApiClient apiClient = retrofit.create(ApiClient.class);
+                    Call<Question> call = apiClient.quizGetter(DIFFICULTY_MEDIUM);
 
-                //Start TriviaActivity after button click
-                RxView.clicks(newGameButton)
-                        .debounce(500, TimeUnit.MILLISECONDS)
-                        .subscribe(aVoid -> {
+                    //Make Call
+                    call.enqueue(new Callback<Question>() {
+                        @Override
+                        public void onResponse(Call<Question> call, Response<Question> response) {
+                            mResults = response.body().getResults();
+
+                            //Start TriviaActivity
                             Intent intent = new Intent(context, TriviaActivity.class);
                             intent.putExtra(QUESTION_LIST, (Serializable) mResults);
                             startActivity(intent);
-                        });
+                        }
 
-            }
+                        @Override
+                        public void onFailure(Call<Question> call, Throwable t) {
+                            Log.e(LOG_TAG, "Error sending trivia request");
+                        }
+                    });
 
-            @Override
-            public void onFailure(Call<Question> call, Throwable t) {
-                Log.e(LOG_TAG, "Error sending trivia request");
-            }
-        });
+                });
     }
 }
