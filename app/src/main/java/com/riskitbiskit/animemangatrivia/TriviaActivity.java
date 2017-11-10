@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -43,6 +45,8 @@ public class TriviaActivity extends AppCompatActivity {
     TextView answerView4;
     @BindView(R.id.adView)
     AdView bannerAdView;
+    @BindView(R.id.trivia_background)
+    ImageView triviaBackground;
 
     //Fields (with dependency injections)
     @Inject InterstitialAd mInterstitialAd;
@@ -64,6 +68,9 @@ public class TriviaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trivia);
         ButterKnife.bind(this);
+
+        //Setup Background Image
+        Glide.with(this).load(R.drawable.am_image_2).into(triviaBackground);
 
         //Get intent from previous activity
         Intent intent = getIntent();
@@ -171,6 +178,8 @@ public class TriviaActivity extends AppCompatActivity {
 
         //Format for apostrophes
         unformatedText = unformatedText.replaceAll("&#039;", "'");
+
+        unformatedText = unformatedText.replaceAll("&eacute;", "");
 
         //Format for quotes
         return unformatedText.replaceAll("&quot;", "\"");

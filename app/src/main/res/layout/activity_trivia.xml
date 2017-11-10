@@ -7,6 +7,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/trivia_background"
+        android:contentDescription="@string/trivia_background_image"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,6 +21,9 @@
 
         <TextView
             android:id="@+id/question"
+            android:background="#9FFF"
+            android:textColor="#000"
+            android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_margin="16dp"
@@ -28,7 +38,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <Button
@@ -36,26 +47,34 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:layout_weight="1"/>
+                    android:background="@drawable/buttonshape"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"/>
 
                 <Button
                     android:id="@+id/answer2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:background="@drawable/buttonshape"
                     android:layout_weight="1"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp">
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="8dp">
 
                 <Button
                     android:id="@+id/answer3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:background="@drawable/buttonshape"
+                    android:layout_marginRight="8dp"
                     android:layout_weight="1"/>
 
                 <Button
@@ -63,6 +82,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:background="@drawable/buttonshape"
                     android:layout_weight="1"/>
 
             </LinearLayout>

@@ -3,9 +3,14 @@ package com.riskitbiskit.animemangatrivia;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.jakewharton.rxbinding2.view.RxView;
+
+import java.io.Serializable;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -17,11 +22,18 @@ public class ResultsActivity extends AppCompatActivity {
     TextView totalCorrectTV;
     @BindView(R.id.total_incorrect)
     TextView totalIncorrectTV;
+    @BindView(R.id.score_tv)
+    TextView scoreTV;
+    @BindView(R.id.result_greeting_tv)
+    TextView resultGreetingTV;
+    @BindView(R.id.done_bt)
+    Button doneBt;
 
     //Global variables
     List<Question.Results> mResults;
     int mCorrect;
     int mIncorrect;
+    double percent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +44,33 @@ public class ResultsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         pullFromIntent(intent);
 
-        totalCorrectTV.setText(mCorrect + "/" + mResults.size());
-        totalIncorrectTV.setText(mIncorrect + "/" + mResults.size());
+        totalCorrectTV.setText(String.valueOf(mCorrect));
+        totalIncorrectTV.setText(String.valueOf(mIncorrect));
+        scoreTV.setText(mCorrect + "/" + mResults.size());
+
+        percent = Double.parseDouble(String.valueOf(mCorrect)) / Double.parseDouble(String.valueOf(mResults.size()));
+
+        RxView.clicks(doneBt)
+                .debounce(500, TimeUnit.MILLISECONDS)
+                .subscribe(aVoid -> {
+                    Intent newGameIntent = new Intent(getBaseContext(), MainActivity.class);
+                    newGameIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(newGameIntent);
+                });
+
+        setupGreeting(percent);
+    }
+
+    private void setupGreeting(double percent) {
+        if (percent == 1) {
+            resultGreetingTV.setText("Perfect!");
+        } else if (percent > .80 && percent < 1) {
+            resultGreetingTV.setText("Great Job!");
+        } else if (percent > .50 && percent < .80) {
+            resultGreetingTV.setText("Nice!");
+        } else {
+            resultGreetingTV.setText("Try Again");
+        }
     }
 
     private void pullFromIntent(Intent intent) {

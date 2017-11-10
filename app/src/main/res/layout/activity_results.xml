@@ -80,7 +80,6 @@
         app:layout_constraintTop_toBottomOf="@+id/number_incorrect_header"/>
 
     <TextView
-        android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -112,7 +111,8 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <Button
-        android:id="@+id/play_again_bt"
+        android:id="@+id/done_bt"
+        android:background="@drawable/buttonshape"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

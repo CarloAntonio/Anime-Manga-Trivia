@@ -21,6 +21,7 @@
 
     <Button
         android:id="@+id/new_game_button"
+        android:background="@drawable/buttonshape"
         android:layout_width="234dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
