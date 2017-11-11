@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -19,22 +19,52 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"/>
 
+    <LinearLayout
+        android:id="@+id/layout_grip"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:background="#9FFF"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:layout_marginBottom="100dp">
+
+        <fr.ganfra.materialspinner.MaterialSpinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="62dp"
+            app:ms_alignLabels="false"
+            app:ms_arrowColor="@color/arrow"
+            app:ms_arrowSize="16dp"
+            app:ms_baseColor="@color/base"
+            app:ms_enableErrorLabel="false"
+            app:ms_enableFloatingLabel="false"
+            app:ms_errorColor="@color/error"
+            app:ms_floatingLabelColor="@color/floating_label"
+            app:ms_floatingLabelText="floating label"
+            app:ms_highlightColor="@color/highlight"
+            app:ms_hint="Difficulty Level"
+            app:ms_hintColor="@color/hint"
+            app:ms_multiline="false"
+            app:ms_thickness="2dp"/>
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/new_game_button"
-        android:background="@drawable/buttonshape"
-        android:layout_width="434dp"
+        android:layout_width="500dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:textSize="20sp"
-        android:text="@string/play"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.91"
-        android:layout_marginStart="8dp"/>
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/buttonshape"
+        android:text="@string/play"/>
 
-
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
