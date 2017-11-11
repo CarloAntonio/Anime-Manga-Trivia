@@ -2,13 +2,17 @@ package com.riskitbiskit.animemangatrivia;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +35,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import fr.ganfra.materialspinner.MaterialSpinner;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
     //Constants
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
     public static final String ROOT_URL = "https://opentdb.com/";
-    public static final String DIFFICULTY_MEDIUM = "medium";
+    public static final String DIFFICULTY_EASY = "Easy";
+    public static final String DIFFICULTY_MEDIUM = "Medium";
+    public static final String DIFFICULTY_HARD = "Hard";
     public static final String QUESTION_LIST = "question_list";
     public static final String APP_ID = "ca-app-pub-9407172029768846~2697309241";
 
@@ -51,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
     Button newGameButton;
     @BindView(R.id.main_frame)
     ImageView background;
+    @BindView(R.id.spinner)
+    MaterialSpinner mMaterialSpinner;
 
     //Fields (with dependency injections)
     @Inject Retrofit.Builder mBuilder;
@@ -79,34 +88,65 @@ public class MainActivity extends AppCompatActivity {
         //initialize retrofit builder using network component
         mBuilder = networkComponent.retrofitBuilder();
 
+        String[] items = {DIFFICULTY_EASY, DIFFICULTY_MEDIUM, DIFFICULTY_HARD };
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mMaterialSpinner.setAdapter(adapter);
+
         //Make API Call and handle result
         RxView.clicks(newGameButton)
                 .debounce(500, TimeUnit.MILLISECONDS)
                 .subscribe(aVoid -> {
 
-                    Retrofit retrofit = mBuilder.build();
+                    //Check to see if a spinner choice was made
+                    if (mMaterialSpinner.getSelectedItem() != null) {
 
-                    ApiClient apiClient = retrofit.create(ApiClient.class);
-                    Call<Question> call = apiClient.quizGetter(DIFFICULTY_MEDIUM);
+                        //Grab user difficulty level and format for API call
+                        String difficulty = mMaterialSpinner
+                                .getSelectedItem()
+                                .toString()
+                                //API requires difficulty to be all lowercase
+                                .toLowerCase();
 
-                    //Make Call
-                    call.enqueue(new Callback<Question>() {
-                        @Override
-                        public void onResponse(Call<Question> call, Response<Question> response) {
-                            mResults = response.body().getResults();
+                        Retrofit retrofit = mBuilder.build();
 
-                            //Start TriviaActivity
-                            Intent intent = new Intent(context, TriviaActivity.class);
-                            intent.putExtra(QUESTION_LIST, (Serializable) mResults);
-                            startActivity(intent);
-                        }
+                        ApiClient apiClient = retrofit.create(ApiClient.class);
+                        Call<Question> call = apiClient.quizGetter(difficulty);
 
-                        @Override
-                        public void onFailure(Call<Question> call, Throwable t) {
-                            Log.e(LOG_TAG, "Error sending trivia request");
-                        }
-                    });
+                        //Make Call
+                        call.enqueue(new Callback<Question>() {
+                            @Override
+                            public void onResponse(Call<Question> call, Response<Question> response) {
+                                mResults = response.body().getResults();
 
+                                //Start TriviaActivity
+                                Intent intent = new Intent(context, TriviaActivity.class);
+                                intent.putExtra(QUESTION_LIST, (Serializable) mResults);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onFailure(Call<Question> call, Throwable t) {
+                                Log.e(LOG_TAG, "Error sending trivia request");
+                            }
+                        });
+                    } else {
+                        //Remind User to choose difficulty
+                        handleToastOnMainThread();
+                    }
                 });
+    }
+
+    private void handleToastOnMainThread() {
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), "Choose Difficulty", Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        handler.post(runnable);
     }
 }

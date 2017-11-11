@@ -3,4 +3,12 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    //Spinner Colors
+    <color name="hint">@color/colorPrimary</color>
+    <color name="arrow">@color/colorPrimary</color>
+    <color name="floating_label">@color/colorPrimary</color>
+    <color name="error">@color/colorPrimary</color>
+    <color name="highlight">@color/colorPrimary</color>
+    <color name="base">@color/colorPrimary</color>
 </resources>
