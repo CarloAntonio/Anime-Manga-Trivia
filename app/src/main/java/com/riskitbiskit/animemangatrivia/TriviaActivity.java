@@ -133,11 +133,9 @@ public class TriviaActivity extends AppCompatActivity {
             //checks to see if text in button text is equal to the correct answer text
             if (textView1.getText().equals(mAnswer)) {
                 mCorrect++;
-                Toast.makeText(getBaseContext(), "Nice! That's " + mCorrect + " Correct!", Toast.LENGTH_SHORT).show();
                 newQuestion();
             } else {
                 mIncorrect++;
-                Toast.makeText(getBaseContext(), "Nope. That's " + mIncorrect + " Incorrect.", Toast.LENGTH_SHORT).show();
                 newQuestion();
             };
         });
