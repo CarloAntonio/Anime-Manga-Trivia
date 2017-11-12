@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Theme Colors-->
     <color name="colorPrimary">#a10001</color>
     <color name="colorPrimaryDark">#6b0000</color>
     <color name="colorAccent">#a5f74f</color>
 
-    //Spinner Colors
+    <!--Spinner Colors-->
     <color name="hint">@color/colorPrimary</color>
     <color name="arrow">@color/colorPrimary</color>
     <color name="floating_label">@color/colorPrimary</color>
     <color name="error">@color/colorPrimary</color>
     <color name="highlight">@color/colorPrimary</color>
     <color name="base">@color/colorPrimary</color>
+
+    <!--Misc-->
+    <color name="transparent_background">#9FFF</color>
 </resources>

@@ -26,7 +26,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:background="#9FFF"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/layout_custom_design_1"
             android:orientation="vertical">
 
             <fr.ganfra.materialspinner.MaterialSpinner
@@ -59,7 +60,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:background="#9FFF"
+            android:background="@drawable/layout_custom_design_1"
             android:orientation="vertical">
 
         </LinearLayout>
