@@ -15,4 +15,5 @@
 
     <!--Misc-->
     <color name="transparent_background">#9FFF</color>
+    <color name="black">#000</color>
 </resources>

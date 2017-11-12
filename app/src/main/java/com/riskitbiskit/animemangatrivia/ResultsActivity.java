@@ -1,6 +1,8 @@
 package com.riskitbiskit.animemangatrivia;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,6 +41,7 @@ public class ResultsActivity extends AppCompatActivity {
     int mCorrect;
     int mIncorrect;
     double percent;
+    SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,17 @@ public class ResultsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         pullFromIntent(intent);
+
+        //Initialize shared preferences
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        //Check if new score is a high score
+        boolean isNewHighScore = checkIfNewHighScore();
+
+        if (isNewHighScore) {
+            //Save high score data
+            saveData();
+        }
 
         totalCorrectTV.setText(String.valueOf(mCorrect));
         totalIncorrectTV.setText(String.valueOf(mIncorrect));
@@ -66,6 +80,62 @@ public class ResultsActivity extends AppCompatActivity {
                 });
 
         setupGreeting(percent);
+    }
+
+    private boolean checkIfNewHighScore() {
+
+        boolean returnValue = false;
+
+        if (mResults.size() == 10) {
+            if (mSharedPreferences.getInt(MainActivity.SAVED_10, 0) < mCorrect) {
+                returnValue = true;
+            } else {
+                returnValue = false;
+            }
+        }
+
+        if (mResults.size() == 20) {
+            if (mSharedPreferences.getInt(MainActivity.SAVED_20, 0) < mCorrect) {
+                returnValue = true;
+            } else {
+                returnValue = false;
+            }
+        }
+
+        if (mResults.size() == 30) {
+            if (mSharedPreferences.getInt(MainActivity.SAVED_30, 0) < mCorrect) {
+                returnValue = true;
+            } else {
+                returnValue = false;
+            }
+        }
+
+        if (mResults.size() == 40) {
+            if (mSharedPreferences.getInt(MainActivity.SAVED_40, 0) < mCorrect) {
+                returnValue = true;
+            } else {
+                returnValue = false;
+            }
+        }
+
+        return returnValue;
+    }
+
+    private void saveData() {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+
+        if (mResults.size() == 10) {
+            editor.putInt(MainActivity.SAVED_10, mCorrect);
+        } else if (mResults.size() == 20) {
+            editor.putInt(MainActivity.SAVED_20, mCorrect);
+        } else if (mResults.size() == 30) {
+            editor.putInt(MainActivity.SAVED_30, mCorrect);
+        } else {
+            editor.putInt(MainActivity.SAVED_40, mCorrect);
+        }
+
+        editor.apply();
+
     }
 
     private void setupGreeting(double percent) {
