@@ -7,7 +7,7 @@ import retrofit2.http.Query;
 
 public interface ApiClient {
 
-    @GET("api.php?amount=5&category=31&type=multiple")
-    Call<Question> quizGetter(@Query("difficulty") String difficulty);
+    @GET("api.php?category=31&type=multiple")
+    Call<Question> quizGetter(@Query("difficulty") String difficulty, @Query("amount") String questionSize);
 
 }
