@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/question"
-            android:background="#9FFF"
+            android:background="@drawable/layout_custom_design_1"
             android:textColor="#000"
             android:textSize="42sp"
             android:layout_width="match_parent"

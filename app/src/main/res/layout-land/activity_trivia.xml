@@ -21,9 +21,10 @@
 
         <TextView
             android:id="@+id/question"
-            android:background="#9FFF"
+            android:background="@drawable/layout_custom_design_1"
             android:textColor="#000"
             android:textSize="20sp"
+            android:padding="8dp"
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_margin="16dp"
