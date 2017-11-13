@@ -17,71 +17,18 @@
         android:id="@+id/layout_grip"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginRight="100dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_alignParentTop="true"
-        android:orientation="vertical"
-        android:layout_marginBottom="100dp">
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/layout_custom_design_1"
-            android:orientation="vertical">
-
-            <fr.ganfra.materialspinner.MaterialSpinner
-                android:id="@+id/spinner_difficulty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                app:ms_alignLabels="false"
-                app:ms_arrowColor="@color/arrow"
-                app:ms_arrowSize="16dp"
-                app:ms_baseColor="@color/base"
-                app:ms_enableErrorLabel="false"
-                app:ms_enableFloatingLabel="false"
-                app:ms_errorColor="@color/error"
-                app:ms_floatingLabelColor="@color/floating_label"
-                app:ms_floatingLabelText="floating label"
-                app:ms_highlightColor="@color/highlight"
-                app:ms_hint="Difficulty Level"
-                app:ms_hintColor="@color/hint"
-                app:ms_multiline="false"
-                app:ms_thickness="2dp"/>
-
-            <fr.ganfra.materialspinner.MaterialSpinner
-                android:id="@+id/spinner_num_questions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                app:ms_alignLabels="false"
-                app:ms_arrowColor="@color/arrow"
-                app:ms_arrowSize="16dp"
-                app:ms_baseColor="@color/base"
-                app:ms_enableErrorLabel="false"
-                app:ms_enableFloatingLabel="false"
-                app:ms_errorColor="@color/error"
-                app:ms_floatingLabelColor="@color/floating_label"
-                app:ms_floatingLabelText="floating label"
-                app:ms_highlightColor="@color/highlight"
-                app:ms_hint="Number Of Questions"
-                app:ms_hintColor="@color/hint"
-                app:ms_multiline="false"
-                app:ms_thickness="2dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp"
+            android:layout_marginRight="16dp"
+            android:layout_height="match_parent"
             android:background="@drawable/layout_custom_design_1"
             android:orientation="vertical">
 
@@ -219,18 +166,75 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/new_game_button"
-        android:layout_width="500dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginLeft="100dp"
-        android:layout_marginRight="100dp"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/buttonshape"
-        android:text="@string/play"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/layout_custom_design_1"
+                android:orientation="vertical">
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spinner_difficulty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    app:ms_alignLabels="false"
+                    app:ms_arrowColor="@color/arrow"
+                    app:ms_arrowSize="16dp"
+                    app:ms_baseColor="@color/base"
+                    app:ms_enableErrorLabel="false"
+                    app:ms_enableFloatingLabel="false"
+                    app:ms_errorColor="@color/error"
+                    app:ms_floatingLabelColor="@color/floating_label"
+                    app:ms_floatingLabelText="floating label"
+                    app:ms_highlightColor="@color/highlight"
+                    app:ms_hint="Difficulty Level"
+                    app:ms_hintColor="@color/hint"
+                    app:ms_multiline="false"
+                    app:ms_thickness="2dp"/>
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spinner_num_questions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    app:ms_alignLabels="false"
+                    app:ms_arrowColor="@color/arrow"
+                    app:ms_arrowSize="16dp"
+                    app:ms_baseColor="@color/base"
+                    app:ms_enableErrorLabel="false"
+                    app:ms_enableFloatingLabel="false"
+                    app:ms_errorColor="@color/error"
+                    app:ms_floatingLabelColor="@color/floating_label"
+                    app:ms_floatingLabelText="floating label"
+                    app:ms_highlightColor="@color/highlight"
+                    app:ms_hint="Number Of Questions"
+                    app:ms_hintColor="@color/hint"
+                    app:ms_multiline="false"
+                    app:ms_thickness="2dp"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/new_game_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/buttonshape"
+                android:text="@string/play"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

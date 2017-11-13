@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:gravity="center"
+            android:textColor="@color/black"
             android:text="Try Again"
             android:textSize="64sp"
             android:textStyle="bold"/>
@@ -39,6 +40,7 @@
             android:layout_marginRight="16dp"
             android:gravity="center"
             android:text="Questions Correct"
+            android:textColor="@color/black"
             android:textSize="48sp"/>
 
         <TextView
@@ -46,10 +48,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:textSize="32sp"
+            android:textSize="64sp"
+            android:textColor="@color/colorPrimary"
             android:text="5"/>
 
         <TextView
@@ -61,6 +61,7 @@
             android:layout_marginRight="16dp"
             android:gravity="center"
             android:text="Questions Incorrect"
+            android:textColor="@color/black"
             android:textSize="48sp"/>
 
         <TextView
@@ -68,10 +69,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:textSize="32sp"
+            android:textSize="64sp"
+            android:textColor="@color/colorPrimary"
             android:text="3"/>
 
         <TextView
@@ -82,6 +81,7 @@
             android:layout_marginRight="16dp"
             android:gravity="center"
             android:text="Score"
+            android:textColor="@color/black"
             android:textSize="48sp"/>
 
         <TextView
@@ -89,10 +89,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:textSize="32sp"
+            android:textSize="64sp"
+            android:textColor="@color/colorPrimary"
             android:text="5/5"/>
 
     </LinearLayout>
