@@ -218,7 +218,7 @@ public class TriviaActivity extends AppCompatActivity {
         mInterstitialAd = mAdComponent.interstitialAd();
         //TODO: Change before releasing for production
         //Set specific Ad unit id
-        mInterstitialAd.setAdUnitId(INTERSTITIAL_APP_UNIT_ID);
+        mInterstitialAd.setAdUnitId(TEST_INTERSTITIAL_APP_UNIT_ID);
         //Use dagger2 to get instance of AdRequest
         mInterstitialAd.loadAd(mAdComponent.adRequest());
 

@@ -5,7 +5,7 @@ This app cap:
 * Quiz users on their anime knowledge through a set of questions
 * Allow users to choose difficulty level and number of questions 
 
-##Libraries Used
+## Libraries Used
 * Butter Knife
 * Retrofit2
 * Glide
